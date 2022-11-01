@@ -5,18 +5,6 @@ class TreeNode:
         self.right = right
 
 def preorder(root):
-	res, stack = [], []
-	while stack or root:
-		while root:
-			res.append(root.val)
-			stack.append(root)
-			root = root.left
-		root = stack.pop()
-		root = root.right
-	return res
-
-
-def preorder2(root):
     res, stack = [], [root]
     while stack:
         node = stack.pop()
@@ -38,23 +26,26 @@ def inorder(root):
 		root = root.right
 	return res
 
-
+# In post order, the root is always the final node
+# Time O(n) need to visit every single node
+# Space O(log n) Average case. log n = height of tree
+# Space O(n) Worst case
 def postorder(root):
-    res, stack = [], [(root, False)]
-    while stack:
-        node, visited = stack.pop()
-        if node:
-            if visited:
-                res.append(node.val)
-            else:
-                stack.append((node, True))
-                stack.append((node.right, False))
-                stack.append((node.left, False))
-    return res
+	if not root:
+            return None
+	res, stack = [], [root]
+	while stack:
+		node = stack.pop()
+		res.insert(0, node.val)
+		if node.left:
+			stack.append(node.left)
+		if node.right:
+			stack.append(node.right)
+	return res
+
 
 T = TreeNode(1, right=TreeNode(2, left=TreeNode(3)))
 print(preorder(T))
-# print(preorder2(T))
 print(inorder(T))
 print(postorder(T))
 
