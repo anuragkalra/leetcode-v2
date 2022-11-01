@@ -28,33 +28,18 @@ def preorder2(root):
 
 
 def inorder(root):
-	res, stack, cur = [], [], root
-	while cur or stack:
-		while cur:
-			stack.append(cur)
-			cur = cur.left
-		cur = stack.pop()
-		res.append(cur.val)
-		cur = cur.right
+	res, stack = [], []
+	while stack or root:
+		while root:
+			stack.append(root)
+			root = root.left
+		root = stack.pop()
+		res.append(root.val)
+		root = root.right
 	return res
 
 
-
-def inorderTraversalIterative(root):
-    res, stack = [], [(root, False)]
-    while stack:
-        node, visited = stack.pop()
-        if node:
-            if visited:
-                res.append(node.val)
-            else:
-                stack.append((node.right, False))
-                stack.append((node, True))
-                stack.append((node.left, False))
-    return res
-
-
-def postorderTraversalIterative(root):
+def postorder(root):
     res, stack = [], [(root, False)]
     while stack:
         node, visited = stack.pop()
@@ -69,11 +54,9 @@ def postorderTraversalIterative(root):
 
 T = TreeNode(1, right=TreeNode(2, left=TreeNode(3)))
 print(preorder(T))
-print(preorder2(T))
-# print(inorder(T))
-
-# print(inorderTraversalIterative(T))
-# print(postorderTraversalIterative(T))
+# print(preorder2(T))
+print(inorder(T))
+print(postorder(T))
 
 
 
